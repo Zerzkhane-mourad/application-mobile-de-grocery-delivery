@@ -1,8 +1,9 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { createDrawerNavigator, DrawerContentScrollView } from '@react-navigation/drawer'
 import MainLayout from '../screens/MainLayout';
 import { COLORS, FONTS, SIZES, constants, icons, dummyData } from '../constants';
+import Animated from 'react-native-reanimated';
 
 const Drawer = createDrawerNavigator()
 
@@ -18,7 +19,7 @@ const CustomDrawerItem = ({ label, icon }) => {
         borderRadius: SIZES.base,
         // backgroundColor
       }}
-      // onPress={}
+    // onPress={}
     >
       <Image
         source={icon}
@@ -37,7 +38,11 @@ const CustomDrawerItem = ({ label, icon }) => {
 }
 
 
-const CustomDrawerContent = ({navigation}) => {
+const CustomDrawerContent = ({ navigation }) => {
+
+    const [progress, setProgress] = React.useState(new Animated.Value(0))
+
+
   return (
     <DrawerContentScrollView
       scrollEnabled={true}
@@ -64,7 +69,7 @@ const CustomDrawerContent = ({navigation}) => {
               alignItems: "center",
               justifyContent: "center"
             }}
-            onPress={()=>navigation.closeDrawer()}
+            onPress={() => navigation.closeDrawer()}
           >
             <Image
               source={icons.cross}
@@ -86,9 +91,9 @@ const CustomDrawerContent = ({navigation}) => {
             marginTop: SIZES.radius,
             alignItems: "center",
           }}
-          onPress={()=> console.log("Mourad")}
+          onPress={() => console.log("Mourad")}
         >
-          <Image 
+          <Image
             source={dummyData.myProfile?.profile_image}
             style={{
               width: 50,
@@ -103,11 +108,11 @@ const CustomDrawerContent = ({navigation}) => {
               marginLeft: SIZES.radius
             }}
           >
-            <Text style={{ color: COLORS.white, ...FONTS.h3,  fontWeight: 'bold' }}>Mourad Zerzkhane</Text>
-            <Text style={{ color: COLORS.white, ...FONTS.body4}}>View Your Profile</Text>
+            <Text style={{ color: COLORS.white, ...FONTS.h3, fontWeight: 'bold' }}>Mourad Zerzkhane</Text>
+            <Text style={{ color: COLORS.white, ...FONTS.body4 }}>View Your Profile</Text>
           </View>
         </TouchableOpacity>
-        
+
         {/*Drawer Items*/}
 
         <View
@@ -125,13 +130,66 @@ const CustomDrawerContent = ({navigation}) => {
             label={constants.screens.my_wallet}
             icon={icons.wallet}
           />
-          
-        </View>    
 
-        
-        
-        
-        
+          <CustomDrawerItem
+            label={constants.screens.notification}
+            icon={icons.notification}
+          />
+
+          <CustomDrawerItem
+            label={constants.screens.favourite}
+            icon={icons.favourite}
+          />
+
+          { /* Line */}
+
+          <View
+            style={{
+              height: 1,
+              marginVertical: SIZES.radius,
+              marginLeft: SIZES.radius,
+              backgroundColor: COLORS.lightGray1
+            }}
+          />
+
+          <CustomDrawerItem
+            label="Track Your Order"
+            icon={icons.location}
+          />
+
+          <CustomDrawerItem
+            label="Coupons"
+            icon={icons.coupon}
+          />
+
+          <CustomDrawerItem
+            label="Setting"
+            icon={icons.setting}
+          />
+
+          <CustomDrawerItem
+            label="Invite a Friend"
+            icon={icons.profile}
+          />
+
+          <CustomDrawerItem
+            label="Help Center"
+            icon={icons.help}
+          />
+        </View>
+
+        <View
+          style={{
+            marginBottom: SIZES.padding
+          }}
+        >
+          <CustomDrawerItem
+            label="Logout"
+            icon={icons.logout}
+          />
+
+        </View>
+
       </View>
     </DrawerContentScrollView>
   )
@@ -161,8 +219,8 @@ const CustomDrawer = () => {
         initialRouteName="MainLayout"
         drawerContent={props => {
           return (
-            <CustomDrawerContent 
-              navigation= {props.navigation}
+            <CustomDrawerContent
+              navigation={props.navigation}
             />
           )
         }}
