@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { FONTS } from '../constants';
+import { COLORS, FONTS } from '../constants';
 
 const Header = ({ containerStyle, title, leftComponent, rightComponent }) => {
     return (
@@ -24,7 +24,7 @@ const Header = ({ containerStyle, title, leftComponent, rightComponent }) => {
                     
                 }}
             >
-                <Text style={{ ...FONTS.h3, fontWeight: 'bold'}}>
+                <Text style={{ ...FONTS.h3, color: COLORS.black , fontWeight: 'bold'}}>
                     {title}
                 </Text>
 
