@@ -18,13 +18,13 @@ const Home = () => {
     //Handler
 
     function handleChangeCategory(categoryId, menuTypeId) {
-        
+
         //Find menu based on the menuId
         let selectedMenu = dummyData.menu.find(a => a.id == menuTypeId)
-    
+
         //set the menu based in the categoryId
-        setMenuList(selectedMenu.list.filter(a=> a.categories.includes(categoryId)))
-    
+        setMenuList(selectedMenu.list.filter(a => a.categories.includes(categoryId)))
+
     }
 
     //Render
@@ -65,7 +65,7 @@ const Home = () => {
                 />
 
                 {/* filter button */}
-                
+
                 <TouchableOpacity>
 
                     <Image
@@ -83,6 +83,48 @@ const Home = () => {
         )
     }
 
+    function renderMenuTypes() {
+        return (
+            <FlatList
+                horizontal
+                data={dummyData.menu}
+                keyExtractor={item => `${item.id}`}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                    marginTop: 30,
+                    marginBottom: 20
+                }}
+                renderItem={({ item, index }) => (
+                    <TouchableOpacity
+                        style={{
+                            marginLeft: SIZES.padding,
+                            marginRight: index == dummyData.menu.length - 1 ? SIZES.padding : 0
+
+                        }}
+                        onPress={() => {
+                            setselectedMenuType(item.id)
+                            handleChangeCategory(selectedCategoryId, item.id)
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: selectedMenuType == item.id ? COLORS.primary : COLORS.black,
+                                ...FONTS.h3,
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            {item.name}
+                        </Text>
+
+                    </TouchableOpacity>
+                )}
+
+
+            />
+
+        )
+    }
+
     return (
         <View
             style={{
@@ -90,7 +132,7 @@ const Home = () => {
             }}
         >
             {/* search */}
-            
+
             {renderSearch()}
 
             {/* list */}
@@ -98,9 +140,19 @@ const Home = () => {
             <FlatList
                 data={menuList}
                 keyExtractor={(item => `${item.id}`)}
-                showsVerticalScrollIndicator= {false}
-                renderItem={({item, index})=>{
-                    return(
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                    <View>
+
+                        {/* menutype */}
+
+                        {renderMenuTypes()}
+
+
+                    </View>
+                }
+                renderItem={({ item, index }) => {
+                    return (
                         <HorizontalFoodCard
                             containerStyle={{
                                 height: 130,
@@ -112,10 +164,10 @@ const Home = () => {
                                 marginTop: 20,
                                 height: 110,
                                 width: 110,
-                                
+
                             }}
                             item={item}
-                            onPress={()=> console.log("hFOOd")}
+                            onPress={() => console.log("hFOOd")}
                         />
 
                     )
