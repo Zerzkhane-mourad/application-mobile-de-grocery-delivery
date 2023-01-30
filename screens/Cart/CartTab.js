@@ -7,7 +7,6 @@ import {
 const CartTab = () => {
     return (
         <View>
-            <Text>dfhgfhdf</Text>
         </View>
     )
 }
