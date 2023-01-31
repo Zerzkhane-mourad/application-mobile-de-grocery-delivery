@@ -6,7 +6,7 @@ import { FONTS, SIZES, COLORS, icons, dummyData } from '../../constants';
 const Section = ({ title, onPress, children }) => {
     return (
         <View>
-        {/* // Header */}
+            {/* // Header */}
             <View
                 style={{
                     flexDirection: 'row',
@@ -61,7 +61,7 @@ const Home = () => {
         let selectedRecommende = dummyData.menu.find(a => a.name == "Recommended")
 
         //set the recommended menu based the categoryId
-        setRecommends(selectedRecommende.list.filter(a => a.categories.includes(categoryId))) 
+        setRecommends(selectedRecommende.list.filter(a => a.categories.includes(categoryId)))
 
         //Find menu based on the menuId
         let selectedMenu = dummyData.menu.find(a => a.id == menuTypeId)
@@ -71,7 +71,7 @@ const Home = () => {
 
         //Retrieve the popular menu
         let selectedPopular = dummyData.menu.find(a => a.name == "Popular")
-    
+
         //set the Popular menu based on the menutypId
         setPopular(selectedPopular.list.filter(a => a.categories.includes(categoryId)))
     }
@@ -172,38 +172,38 @@ const Home = () => {
         )
     }
 
-    function renderRecommendedSection () {
+    function renderRecommendedSection() {
         return (
             <Section
-            title="Recommended"
-            onPress={()=> console.log('renderRec')}
+                title="Recommended"
+                onPress={() => console.log('renderRec')}
             >
                 <FlatList
                     data={recommends}
-                    keyExtractor={item =>  `${item.id}`}
+                    keyExtractor={item => `${item.id}`}
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    renderItem={({item, index})=> (
+                    renderItem={({ item, index }) => (
                         <HorizontalFoodCard
-                        containerStyle={{
-                            height: 180,
-                            width: SIZES.width * 0.85,
-                            marginLeft: index == 0 ? SIZES.padding : 18,
-                            marginRight: index == recommends.length - 1 ? SIZES.padding : 0 ,
-                            paddingRight: SIZES.radius,
-                            alignItems: 'center'
+                            containerStyle={{
+                                height: 180,
+                                width: SIZES.width * 0.85,
+                                marginLeft: index == 0 ? SIZES.padding : 18,
+                                marginRight: index == recommends.length - 1 ? SIZES.padding : 0,
+                                paddingRight: SIZES.radius,
+                                alignItems: 'center'
 
-                        }}
+                            }}
 
-                        imageStyle={{
-                            marginTop: 35,
-                            height: 150,
-                            width: 150
-                        }}
-                        
-                        item={item} 
-                        onPress={()=> console.log("hFoodCard")}
-                           
+                            imageStyle={{
+                                marginTop: 35,
+                                height: 150,
+                                width: 150
+                            }}
+
+                            item={item}
+                            onPress={() => console.log("hFoodCard")}
+
                         />
                     )}
 
@@ -215,35 +215,125 @@ const Home = () => {
         )
 
     }
-    
+
     function renderPopulateSection() {
 
         return (
             <Section
-            title= "Popular Near You"
-            onPress={()=> ("show all populate")}
+                title="Popular Near You"
+                onPress={() => ("show all populate")}
             >
                 <FlatList
                     data={popular}
                     keyExtractor={item => `${item.id}`}
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    renderItem={({ item , index})=> (
+                    renderItem={({ item, index }) => (
 
                         <VerticalFoodCard
                             containerStyle={{
                                 marginLeft: index == 0 ? SIZES.padding : 18,
-                                marginRight: index == popular.length -1 ? SIZES.padding : 0
+                                marginRight: index == popular.length - 1 ? SIZES.padding : 0
                             }}
                             item={item}
-                            onPress={()=> console.log('vfood card')}
-                        
+                            onPress={() => console.log('vfood card')}
+
                         />
                     )}
 
                 />
 
             </Section>
+        )
+
+    }
+
+    function renderFoodCategories() {
+        return (
+            <FlatList
+                data={dummyData.categories}
+                keyExtractor={item => `${item.id}`}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item, index }) => (
+                    <TouchableOpacity
+                        style={{
+                            flexDirection: 'row',
+                            marginTop: SIZES.padding,
+                            marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
+                            marginRight: index == dummyData.categories.length - 1 ? SIZES.padding : 0,
+                            paddingHorizontal: 8,
+                            borderRadius: SIZES.radius,
+                            backgroundColor: selectedCategoryId == item.id ? COLORS.primary : COLORS.lightGray2
+                        }}
+
+                        onPress={() => {
+                            setSelectedCategoryId(item.id)
+                            handleChangeCategory(item.id, selectedMenuType)
+
+                        }}
+                    >
+                        <Image
+                            source={item.icon}
+                            style={{
+                                marginTop: 5,
+                                height: 50,
+                                width: 50
+                            }}
+
+                        />
+
+                        <Text style={{ alignSelf: 'center', marginRight: SIZES.base, color: selectedCategoryId == item.id ? COLORS.white : COLORS.darkGray, ...FONTS.h3 }}>
+                            {item.name}
+                        </Text>
+
+
+                    </TouchableOpacity>
+
+                )}
+            />
+        )
+    }
+
+    function renderDeliveryto() {
+
+        return (
+
+            <View
+                style={{
+                    marginTop: SIZES.padding,
+                    marginHorizontal: SIZES.padding
+                }}
+            >
+
+                <Text style={{ color: COLORS.primary, ...FONTS.body3 }}>
+                    DELIVERY To
+                </Text>
+
+                <TouchableOpacity
+                    style={{
+                        flexDirection: 'row',
+                        marginTop: SIZES.base,
+                        alignItems: 'center'
+                    }}
+                >
+                    <Text style={{ ...FONTS.h3, }}>
+                        {dummyData.myProfile.address}
+                    </Text>
+
+                    <Image
+                        source={icons.down_arrow}
+                        style={{
+                            marginLeft: SIZES.base,
+                            height: 20,
+                            width: 20
+                        }}
+                    />
+
+                </TouchableOpacity>
+
+            </View>
+
         )
 
     }
@@ -266,6 +356,14 @@ const Home = () => {
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
                     <View>
+
+                        {/* Delivery To */}
+
+                        {renderDeliveryto()}
+
+                        {/* Food ctegories section */}
+
+                        {renderFoodCategories()}
 
                         {/* Populate */}
 
@@ -303,6 +401,9 @@ const Home = () => {
 
                     )
                 }}
+                ListFooterComponent={
+                    <View style={{ height: 200 }} />
+                }
 
             />
 
