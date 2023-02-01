@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, TextInput, FlatList } from 'react-native';
-import { HorizontalFoodCard, VerticalFoodCard } from '../../components';
+import { HorizontalFoodCard, VerticalFoodCard, FilterModal } from '../../components';
 import { FONTS, SIZES, COLORS, icons, dummyData } from '../../constants';
 
 const Section = ({ title, onPress, children }) => {
@@ -48,6 +48,8 @@ const Home = () => {
     const [menuList, setMenuList] = React.useState([])
     const [recommends, setRecommends] = React.useState([])
     const [popular, setPopular] = React.useState([])
+
+    const [showFilterModel, setShowFilterModel] = React.useState(false)
 
     React.useEffect(() => {
         handleChangeCategory(selectedCategoryId, selectedMenuType)
@@ -115,7 +117,10 @@ const Home = () => {
 
                 {/* filter button */}
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=> setShowFilterModel(true)}
+                >
+                    
 
                     <Image
                         source={icons.filter}
@@ -253,7 +258,7 @@ const Home = () => {
             <FlatList
                 data={dummyData.categories}
                 keyExtractor={item => `${item.id}`}
-                horizontal
+                horizontal 
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item, index }) => (
                     <TouchableOpacity
@@ -348,6 +353,17 @@ const Home = () => {
 
             {renderSearch()}
 
+            {/* Filter */}
+
+            {showFilterModel && 
+
+                <FilterModal
+                    isVisible= {showFilterModel}
+                    onClose = {()=>setShowFilterModel(false)}
+                />
+            
+            }
+
             {/* list */}
 
             <FlatList
@@ -361,7 +377,7 @@ const Home = () => {
 
                         {renderDeliveryto()}
 
-                        {/* Food ctegories section */}
+                        {/* Food categories section */}
 
                         {renderFoodCategories()}
 
