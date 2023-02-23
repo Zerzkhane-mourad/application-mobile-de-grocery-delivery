@@ -173,7 +173,8 @@ const Home = () => {
                     </TouchableOpacity>
                 )}
 
-            />
+            />  
+            
         )
     }
 
